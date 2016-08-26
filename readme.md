@@ -21,7 +21,7 @@ The script only currently works on \*nix machines, but hopefully, I can get a wi
 Navigate to a project directory, and run the following command.
 
 ```
-sh -c $(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.sh)
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.sh)"
 ```
 ### What does that do?
 
