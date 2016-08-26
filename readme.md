@@ -14,15 +14,16 @@ Here are some pre-requesites that you'll need installed:
 - [node/npm](https://nodejs.org)
 - [docker](https://www.docker.com/products/overview#/install_the_platform)
 
-The script only currently works on \*nix machines, but hopefully, I can get a windows version ready soon :).
-
 ### How do I use it?
 
-Navigate to a project directory, and run the following command.
+Navigate to a project directory, and run the following command (replacing names as appropriate)
 
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.sh)"
+GITHUBUSER="johnhenry" GITLABUSER="johnhenry" sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.sh)"
 ```
+
+The script works on \*nix machines, so if you are running Windows 10 Professional, you can take advantage of with Windows sub-system for linux to run it.
+
 ### What does that do?
 
 #### package.json
@@ -74,5 +75,5 @@ npm run deploy-win -s
 ##### Setup images
 The npm scripts are set up to mount an image and run a command from that image on a directory. Set up the "run" and "package.json" files appropriately.
 
-###What's up with the "-s" after every npm run command
+###What's up with the "-s" after every npm run command?
 It's not necessary, but it supresses some extra stuff from the npm command that aren't really necessary.

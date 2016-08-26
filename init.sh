@@ -1,7 +1,6 @@
 #populate varaibles
-dockerhub=johnhenry
-github=johnhenry
-gitlab=johnhenry
+github=$GITHUBUSER
+gitlab=$GITLABUSER
 description=''
 randid=$(date +%N)
 
