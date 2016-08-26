@@ -79,37 +79,36 @@ tempset scripts delete "$tempdelete_"
 name=$(tempget name)
 description=$(tempget description)
 #container names
-lint="$name-lint"
-compile="$name-compile"
-demo="$name-demo"
-test="$name-test"
-deploy="$name-deploy"
+scripts="scripts"
+lint="lint"
+compile="compile"
+demo="demo"
+test="test"
+deploy="deploy"
 containernames="$lint $compile $demo $test $deploy"
 
 
 echo "adding docker scripts to packages.json"
 #build image script
-tempset scripts "build-images" "docker build -t $lint-$randid $lint && docker build -t $compile-$randid $compile && docker build -t $demo-$randid $demo && docker build -t $test-$randid $test && docker build -t $deploy-$randid $deploy"
+tempset scripts "build-images" "docker build -t $name-$lint-$randid $scripts/$lint && docker build -t $name-$compile-$randid $scripts/$compile && docker build -t $name-$demo-$randid $scripts/$demo && docker build -t $name-$test-$randid $scripts/$test && docker build -t $name-$deploy-$randid $scripts/$deploy"
 #remove image scripts
-tempset scripts "remove-images" "docker rmi $(docker images -aq *-$randid)"
+tempset scripts "remove-images" "docker rmi \$(docker images -aq $name-*-$randid)"
 
 #add lint script
-tempset scripts lint "docker run -v $(pwd):/usr/src/node-app/src --rm $lint-$randid"
-tempset scripts lint-win "docker run -v %cd%:/usr/src/node-app/src --rm $lint-$randid"
+tempset scripts lint "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$lint-$randid"
+tempset scripts lint-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$lint-$randid"
 #add compile script
-tempset scripts compile "docker run -v $(pwd):/usr/src/node-app/src --rm $compile-$randid"
-tempset scripts compile-win "docker run -v %cd%:/usr/src/node-app/src --rm $compile-$randid"
+tempset scripts compile "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$compile-$randid"
+tempset scripts compile-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$compile-$randid"
 #add demo script
-tempset scripts demo "docker run -v $(pwd):/usr/src/node-app/src --rm $demo-$randid"
-tempset scripts demo-win "docker run -v %cd%:/usr/src/node-app/src --rm $demo-$randid"
+tempset scripts demo "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$demo-$randid"
+tempset scripts demo-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$demo-$randid"
 #add test scripts
-tempset scripts test "docker run -v $(pwd):/usr/src/node-app/src --rm $test-$randid"
-tempset scripts test-win "docker run -v %cd%:/usr/src/node-app/src --rm $test-$randid"
+tempset scripts test "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$test-$randid"
+tempset scripts test-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$test-$randid"
 #add deploy scripts
-tempset scripts deploy "docker run -v $(pwd):/usr/src/node-app/src --rm $deploy-$randid"
-tempset scripts deploy-win "docker run -v %cd%:/usr/src/node-app/src --rm $deploy-$randid"
-
-
+tempset scripts deploy "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$deploy-$randid"
+tempset scripts deploy-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$deploy-$randid"
 
 #check .npmrc
 if [ ! -f .npmrc ]; then
@@ -135,7 +134,8 @@ git remote add origin git@gitlab.com:$gitlab/$name.git
 if [ ! -f .gitignore ]; then
 	gitignore="
 node_modules/\n
-.DS_Store\n"
+.DS_Store\n
+npm-debug.log\n"
 	echo $gitignore >> .gitignore
 fi
 
@@ -159,7 +159,8 @@ if [ ! -f ./readme.md ]; then
 ## $description\n"
 	echo $readme >> readme.md
 fi
-
+mkdir $scripts
+cd $scripts
 #create container files
 for containername in $containernames
 do
@@ -178,3 +179,4 @@ RUN npm install" >> Dockerfile
 	echo "CMD ./run" >> Dockerfile
 	cd ..
 done
+cd ..

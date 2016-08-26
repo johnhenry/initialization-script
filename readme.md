@@ -60,8 +60,17 @@ npm run compile -s
 npm run demo -s
 npm run test -s
 npm run deploy -s
-
 ```
+There are equalvalents to be run atop windows:
+
+```bash
+npm run lint-win -s
+npm run compile-win -s
+npm run demo-win -s
+npm run test-win -s
+npm run deploy-win -s
+```
+
 ##### Setup images
 The npm scripts are set up to mount an image and run a command from that image on a directory. Set up the "run" and "package.json" files appropriately.
 
