@@ -94,20 +94,20 @@ tempset scripts "build-images" "docker build -t $name-$lint-$randid $scripts/$li
 tempset scripts "remove-images" "docker rmi \$(docker images -aq $name-*-$randid)"
 
 #add lint script
-tempset scripts lint "docker run -v \$(pwd):/src --rm $name-$lint-$randid"
-tempset scripts lint-win "docker run -v %cd%:/src --rm $name-$lint-$randid"
+tempset scripts lint "docker run -v \$(pwd):/PROJECT --rm $name-$lint-$randid"
+tempset scripts lint-win "docker run -v %cd%:/PROJECT --rm $name-$lint-$randid"
 #add compile script
-tempset scripts compile "docker run -v \$(pwd):/src --rm $name-$compile-$randid"
-tempset scripts compile-win "docker run -v %cd%:/src --rm $name-$compile-$randid"
+tempset scripts compile "docker run -v \$(pwd):/PROJECT --rm $name-$compile-$randid"
+tempset scripts compile-win "docker run -v %cd%:/PROJECT --rm $name-$compile-$randid"
 #add demo script
-tempset scripts demo "docker run -v \$(pwd):/src --rm $name-$demo-$randid"
-tempset scripts demo-win "docker run -v %cd%:/src --rm $name-$demo-$randid"
+tempset scripts demo "docker run -v \$(pwd):/PROJECT --rm $name-$demo-$randid"
+tempset scripts demo-win "docker run -v %cd%:/PROJECT --rm $name-$demo-$randid"
 #add test scripts
-tempset scripts test "docker run -v \$(pwd):/src --rm $name-$test-$randid"
-tempset scripts test-win "docker run -v %cd%:/src --rm $name-$test-$randid"
+tempset scripts test "docker run -v \$(pwd):/PROJECT --rm $name-$test-$randid"
+tempset scripts test-win "docker run -v %cd%:/PROJECT --rm $name-$test-$randid"
 #add deploy scripts
-tempset scripts deploy "docker run -v \$(pwd):/src --rm $name-$deploy-$randid"
-tempset scripts deploy-win "docker run -v %cd%:/src --rm $name-$deploy-$randid"
+tempset scripts deploy "docker run -v \$(pwd):/PROJECT --rm $name-$deploy-$randid"
+tempset scripts deploy-win "docker run -v %cd%:/PROJECT --rm $name-$deploy-$randid"
 
 #check .npmrc
 if [ ! -f .npmrc ]; then
