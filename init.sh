@@ -167,15 +167,14 @@ do
 	cd $imagename
 	npm init --force
 	echo "#! /bin/sh
-echo \"$imagename\"
-ls src
+echo \"modify contents of 'scripts/$imagename/' directory to define this action.\"
 " >> run
 	echo "FROM mhart/alpine-node
 COPY run .
 RUN chmod +x run
 COPY package.json .
-RUN npm install" >> Dockerfile
-	echo "CMD ./run" >> Dockerfile
+RUN npm install
+CMD ./run" >> Dockerfile
 	cd ..
 done
 cd ..
