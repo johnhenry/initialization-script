@@ -77,14 +77,14 @@ tempset scripts delete "$tempdelete_"
 #populate more variables
 name=$(tempget name)
 description=$(tempget description)
-#container names
+#image names
 scripts="scripts"
 lint="lint"
 compile="compile"
 demo="demo"
 test="test"
 deploy="deploy"
-containernames="$lint $compile $demo $test $deploy"
+imagenames="$lint $compile $demo $test $deploy"
 
 
 echo "adding docker scripts to packages.json"
@@ -94,20 +94,20 @@ tempset scripts "build-images" "docker build -t $name-$lint-$randid $scripts/$li
 tempset scripts "remove-images" "docker rmi \$(docker images -aq $name-*-$randid)"
 
 #add lint script
-tempset scripts lint "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$lint-$randid"
-tempset scripts lint-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$lint-$randid"
+tempset scripts lint "docker run -v \$(pwd):/src --rm $name-$lint-$randid"
+tempset scripts lint-win "docker run -v %cd%:/src --rm $name-$lint-$randid"
 #add compile script
-tempset scripts compile "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$compile-$randid"
-tempset scripts compile-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$compile-$randid"
+tempset scripts compile "docker run -v \$(pwd):/src --rm $name-$compile-$randid"
+tempset scripts compile-win "docker run -v %cd%:/src --rm $name-$compile-$randid"
 #add demo script
-tempset scripts demo "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$demo-$randid"
-tempset scripts demo-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$demo-$randid"
+tempset scripts demo "docker run -v \$(pwd):/src --rm $name-$demo-$randid"
+tempset scripts demo-win "docker run -v %cd%:/src --rm $name-$demo-$randid"
 #add test scripts
-tempset scripts test "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$test-$randid"
-tempset scripts test-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$test-$randid"
+tempset scripts test "docker run -v \$(pwd):/src --rm $name-$test-$randid"
+tempset scripts test-win "docker run -v %cd%:/src --rm $name-$test-$randid"
 #add deploy scripts
-tempset scripts deploy "docker run -v \$(pwd):/usr/src/node-app/src --rm $name-$deploy-$randid"
-tempset scripts deploy-win "docker run -v %cd%:/usr/src/node-app/src --rm $name-$deploy-$randid"
+tempset scripts deploy "docker run -v \$(pwd):/src --rm $name-$deploy-$randid"
+tempset scripts deploy-win "docker run -v %cd%:/src --rm $name-$deploy-$randid"
 
 #check .npmrc
 if [ ! -f .npmrc ]; then
@@ -160,17 +160,17 @@ if [ ! -f ./readme.md ]; then
 fi
 mkdir $scripts
 cd $scripts
-#create container files
-for containername in $containernames
+#create image files
+for imagename in $imagenames
 do
-	mkdir $containername
-	cd $containername
+	mkdir $imagename
+	cd $imagename
 	npm init --force
 	echo "#! /bin/sh
-echo \"$containername\"
+echo \"$imagename\"
 ls src
 " >> run
-	echo "FROM risingstack/alpine:3.4-v6.2.0-3.6.1
+	echo "FROM mhart/alpine-node
 COPY run .
 RUN chmod +x run
 COPY package.json .
