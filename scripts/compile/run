@@ -1,4 +1,2 @@
 #! /bin/sh
-echo "compile"
-ls src
-
+npm run compile -s
