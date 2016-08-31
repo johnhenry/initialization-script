@@ -19,13 +19,13 @@ Here are some pre-requesites that you'll need installed:
 Navigate to a project directory, and run the following command (replacing names as appropriate)
 
 ```
-GITHUBUSER="johnhenry" GITLABUSER="johnhenry" sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.s)"
+GITHUBUSER="johnhenry" GITLABUSER="johnhenry" sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.sh)"
 ```
 
 Or, if you prefer to use wget,
 
 ```
-GITHUBUSER="johnhenry" GITLABUSER="johnhenry" sh -c "$(wget https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.s -O - )"
+GITHUBUSER="johnhenry" GITLABUSER="johnhenry" sh -c "$(wget https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.sh -O - )"
 ```
 
 
