@@ -131,25 +131,38 @@ git remote add origin git@gitlab.com:$gitlab/$name.git
 
 #check .gitignore
 if [ ! -f .gitignore ]; then
-	gitignore="
-node_modules/\n
+	gitignore="node_modules/\n
 .DS_Store\n
 npm-debug.log\n"
 	echo $gitignore >> .gitignore
 fi
 
-#check post-commit hook
-if [ ! -f ./.git/hooks/post-commit.sh ]; then
-	echo "creating post-commit.sh"
-	hook="#! /bin/bash\n
-	version=\`git diff HEAD^..HEAD -- \"\$(git rev-parse --show-toplevel)\"/package.json | grep '^\+.*version' | sed -s 's/[^0-9\.]//g'\`\n
-	\n
-	if [ \"\$version\" != \"\" ]; then\n
-	    git tag -a \"v\$version\" -m \"\`git log -1 --format=%s\`\"\n
-	    echo \"Created a new tag, v\$version\"\n
-	fi"
-	echo $hook > ./.git/hooks/post-commit.sh
+#add post-commit hook writer
+if [ ! -f ./githookwriter ]; then
+	postcommithook="#! /bin/bash\n
+#add git version tag upon npm version <major|minor|patch> \n
+version=\\\`git diff HEAD^..HEAD -- \\\"\\\$(git rev-parse --show-toplevel)\\\"/package.json | grep '^\+.*version' | sed -s 's/[^0-9\.]//g'\\\`\n
+\n
+if [ \\\"\\\$version\\\" != \\\"\\\" ]; then\n
+    git tag -a \\\"v\\\$version\\\" -m \\\"\\\`git log -1 --format=%s\\\`\\\"\n
+    echo \\\"Created a new tag, v\\\$version\\\"\n
+fi"
+	hookwriter="#! /bin/bash\n
+#install git post commit hook\n
+echo \"creating ./.git/hooks/post-commit.sh\"\n
+echo \"$postcommithook\" > ./.git/hooks/post-commit.sh\n
+"
+	echo $hookwriter > ./githookwriter
+	chmod +x ./githookwriter
 fi
+
+
+#add post-commit hook
+if [ ! -f ./.git/hooks/post-commit.sh ]; then
+	./githookwriter
+fi
+echo "User should run ./githookwriter to install git hook"
+
 
 #check existance of readme.md
 if [ ! -f ./readme.md ]; then
