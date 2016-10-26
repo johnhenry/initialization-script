@@ -1,7 +1,7 @@
 {
   "title": "Initialization Script",
   "name": "initialization-script",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "This is a set of initialization scripts that use common tools and shell scripts to help me prototype projects.",
   "main": "init.sh",
   "devDependencies": {},
