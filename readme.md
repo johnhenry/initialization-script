@@ -27,7 +27,7 @@ Ensure that these utilities are installed first:
 In your project directory, run the following script:
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/init.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/init.sh)"
 ```
 
 This and also adds get, set, and delete npm scripts that allow manipulation of the package as a key-value store.
@@ -82,7 +82,7 @@ Update project capabilities by running scripts in the project directory.
   - readme.md
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/js-next-browser-slug.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/js-next-browser-slug.sh)"
 ```
 
 ### tag-git-npm-version.sh
@@ -95,7 +95,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - npm run uninstall < package name >
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/tag-git-npm-version.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/tag-git-npm-version.sh)"
 ```
 
 ### js-next-browser-slug.sh
@@ -108,7 +108,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - dist/index.js
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/js-next-browser-slug.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/js-next-browser-slug.sh)"
 ```
 
 ### node-next.sh
@@ -119,7 +119,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - node/index.js
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/node-next.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/node-next.sh)"
 ```
 
 ### css-next-slug.sh
@@ -132,7 +132,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - dist/index.css
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/css-next-slug.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/css-next-slug.sh)"
 ```
 
 ### html.sh
@@ -146,7 +146,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - dist/index.js
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/html.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/html.sh)"
 ```
 
 ### serve-static.sh
@@ -157,7 +157,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - dist/
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/serve-static.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/serve-static.sh)"
 ```
 
 ## unfinished installation scripts
@@ -174,7 +174,7 @@ These scripts will be ready soon.
   - dist/index.js
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/js-next-slug.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/js-next-slug.sh)"
 ```
 
 ### lint-js.sh
@@ -183,7 +183,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - npm run lint-js < package name >
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/lint-js.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/lint-js.sh)"
 ```
 
 ### lint-css.sh
@@ -192,7 +192,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - npm run lint-css < package name >
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/lint-css.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/lint-css.sh)"
 ```
 
 ### move.sh
@@ -204,7 +204,7 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - dist/
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/move.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/move.sh)"
 ```
 
 ### deploy-surge.sh
@@ -215,5 +215,5 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/
   - dist/*
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.scripts/deploy-surge.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/deploy-surge.sh)"
 ```
