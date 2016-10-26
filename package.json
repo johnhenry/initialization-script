@@ -1,15 +1,25 @@
 {
+  "title":"Initialization Script",
   "name": "initialization-script",
   "version": "0.0.4",
-  "description": "",
+  "description": "This is a set of initialization scripts that use common tools and shell scripts to help me prototype projects.",
   "main": "init.sh",
-  "author": "",
-  "license": "MIT",
+  "devDependencies": {},
   "scripts": {
     "set": "node -e \"var target = './package.json';\nvar pkg = require(target);\nvar value = process.argv[process.argv.length - 1];\nvar p = pkg;\nfor(var n = 1; n < process.argv.length;n++){\n    var key = process.argv[n];\n      if(n >= process.argv.length - 2){\n          p[key] = value;\n          break;\n        }else{\n          p[key] = p[key] || {};\n          p = p[key];\n        }\n      };\nrequire('fs').writeFileSync(target, (JSON.stringify(pkg, null, '  ')));\"",
     "get": "node -e \"var pkg = require('./package.json');\nvar p = pkg;\nvar result;\nvar keys = [];\nfor(var n = 1; n<process.argv.length;n++){  key = process.argv[n];\n  try{\n    result = p[key];\n    p = pkg[key];\n    keys.push(key);\n  }catch(e){\n    console.error('key: ' + keys.join(' -> ') + ' is not an object' );\n    process.exit(1);\n  }\n}\nconsole.log(result);\"",
     "delete": "node -e \"var target = './package.json';\nvar pkg = require(target);\nvar result;\nvar p = pkg;\nfor(var n = 1; n < process.argv.length;n++){\n      var key = process.argv[n];\n      if(n >= process.argv.length - 1){\n          result = p[key];\n\t\t\t\t\tdelete p[key];\n          break;\n        }else{\n          p[key] = p[key] || {};\n          p = p[key];\n        }\n      };\nrequire('fs').writeFileSync(target, (JSON.stringify(pkg, null, '  ')));\nconsole.log(result);\"",
-    "gen": "docker run -v $(pwd):/PROJECT --rm johnhenry/readme-generator:0.0.0",
-    "gen-win": "docker run -v %cd%:/PROJECT --rm johnhenry/readme-generator:0.0.0"
-  }
+    "generate-readme": "node ./readme/.script/generate"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@gitlab.com/johnhenry/startled.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://gitlab.com/johnhenry/startled/issues"
+  },
+  "homepage": "https://gitlab.com/johnhenry/startled#README"
 }

@@ -1,9 +1,3 @@
-#populate varaibles
-github=$GITHUBUSER
-gitlab=$GITLABUSER
-description=''
-randid=$(date +%N)
-
 ####
 ##npm / package.json
 ####
@@ -74,120 +68,16 @@ tempset scripts set "$tempset_"
 tempset scripts get "$tempget_"
 tempset scripts delete "$tempdelete_"
 
-#populate more variables
-name=$(tempget name)
-description=$(tempget description)
-#image names
-scripts="scripts"
-lint="lint"
-compile="compile"
-demo="demo"
-test="test"
-deploy="deploy"
-imagenames="$lint $compile $demo $test $deploy"
-
-
-echo "adding docker scripts to packages.json"
-#build image script
-tempset scripts "build-images" "docker build -t $name-$lint-$randid $scripts/$lint && docker build -t $name-$compile-$randid $scripts/$compile && docker build -t $name-$demo-$randid $scripts/$demo && docker build -t $name-$test-$randid $scripts/$test && docker build -t $name-$deploy-$randid $scripts/$deploy"
-#remove image scripts
-tempset scripts "remove-images" "docker rmi \$(docker images -aq $name-*-$randid)"
-
-#add lint script
-tempset scripts lint "docker run -v \$(pwd):/PROJECT --rm $name-$lint-$randid"
-tempset scripts lint-win "docker run -v %cd%:/PROJECT --rm $name-$lint-$randid"
-#add compile script
-tempset scripts compile "docker run -v \$(pwd):/PROJECT --rm $name-$compile-$randid"
-tempset scripts compile-win "docker run -v %cd%:/PROJECT --rm $name-$compile-$randid"
-#add demo script
-tempset scripts demo "docker run -v \$(pwd):/PROJECT --rm $name-$demo-$randid"
-tempset scripts demo-win "docker run -v %cd%:/PROJECT --rm $name-$demo-$randid"
-#add test scripts
-tempset scripts test "docker run -v \$(pwd):/PROJECT --rm $name-$test-$randid"
-tempset scripts test-win "docker run -v %cd%:/PROJECT --rm $name-$test-$randid"
-#add deploy scripts
-tempset scripts deploy "docker run -v \$(pwd):/PROJECT --rm $name-$deploy-$randid"
-tempset scripts deploy-win "docker run -v %cd%:/PROJECT --rm $name-$deploy-$randid"
-
-#check .npmrc
+#check existance of .npmrc
 if [ ! -f .npmrc ]; then
 	echo "creating .npmrc"
-	echo "save=true;" > .npmrc
+	echo "save=true" > .npmrc
 fi
 
-####
-##git
-####
-#check existance of git repository
-if [ ! -f .git ]; then
-	echo "initializing git repository"
-	git init -q
-fi
-
-#add git repos
-git remote add github git@github.com:$github/$name.git
-git remote add gitlab git@gitlab.com:$gitlab/$name.git
-git remote add origin git@gitlab.com:$gitlab/$name.git
-
-#check .gitignore
+#check existance of .gitignore
 if [ ! -f .gitignore ]; then
 	gitignore="node_modules/\n
 .DS_Store\n
 npm-debug.log\n"
 	echo $gitignore >> .gitignore
 fi
-
-#add post-commit hook writer
-if [ ! -f ./githookwriter ]; then
-	postcommithook="#! /bin/bash\n
-#add git version tag upon npm version <major|minor|patch> \n
-version=\\\`git diff HEAD^..HEAD -- \\\"\\\$(git rev-parse --show-toplevel)\\\"/package.json | grep '^\+.*version' | sed -s 's/[^0-9\.]//g'\\\`\n
-\n
-if [ \\\"\\\$version\\\" != \\\"\\\" ]; then\n
-    git tag -a \\\"v\\\$version\\\" -m \\\"\\\`git log -1 --format=%s\\\`\\\"\n
-    echo \\\"Created a new tag, v\\\$version\\\"\n
-fi"
-	hookwriter="#! /bin/bash\n
-#install git post commit hook\n
-echo \"creating ./.git/hooks/post-commit.sh\"\n
-echo \"$postcommithook\" > ./.git/hooks/post-commit.sh\n
-"
-	echo $hookwriter > ./githookwriter
-	chmod +x ./githookwriter
-fi
-
-
-#add post-commit hook
-if [ ! -f ./.git/hooks/post-commit.sh ]; then
-	./githookwriter
-fi
-echo "User should run ./githookwriter to install git hook"
-
-
-#check existance of readme.md
-if [ ! -f ./readme.md ]; then
-	echo "creating readme.md"
-	readme="# $named\n
-## $description\n"
-	echo $readme >> readme.md
-fi
-mkdir $scripts
-cd $scripts
-#create image files
-for imagename in $imagenames
-do
-	mkdir $imagename
-	cd $imagename
-	npm init --force
-	echo "#! /bin/sh
-echo \"modify contents of 'scripts/$imagename/' directory to define this action.\"
-" >> run
-	echo "FROM mhart/alpine-node
-COPY run .
-RUN chmod +x run
-COPY package.json .
-RUN npm install
-CMD ./run" >> Dockerfile
-	cd ..
-done
-cd ..
