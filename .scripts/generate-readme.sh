@@ -19,7 +19,7 @@ try{
   data = {};
 }
 const template = fs.readFileSync(path.join(cwd, "readme", "readme.md.ejs"), "utf-8");
-fs.writeFileSync(path.join(cwd, "readme.md"), ejs.compile(template)(data));' > readme/.script/generate.js
+fs.writeFileSync(path.join(cwd, "readme.md"), ejs.compile(template)(Object.assign(require(path.join(cwd, "package.json")),data)));' > readme/.script/generate.js
 
 #create scripts
 npm run set scripts generate-readme 'node ./readme/.script/generate'
