@@ -82,13 +82,13 @@ Update project capabilities by running scripts in the project directory.
   - readme.md
 
 ```bash
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.startled/scripts/js-next-browser-slug.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/startled/master/.startled/scripts/generate-readme.sh)"
 ```
 
 ### tag-git-npm-version.sh
 - Tag repo with package version upon running git version <'major'|'minor'|'patch'>
 
-- Note: must be run after cloning repository or running git init
+- Note: must be run on a git repository
 
 - Creates scripts:
   - npm run install < package name >
