@@ -106,6 +106,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-s
   - script/index.js
 - Compiles to files:
   - dist/index.js
+- Note: you should import the "babel-polyfill" plugin at the top of your main file with
+	import "babel-polyfill"
 
 ```bash
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnhenry/initialization-script/master/.scripts/js-next-browser-slug.sh)"
