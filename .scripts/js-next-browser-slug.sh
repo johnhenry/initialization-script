@@ -10,10 +10,11 @@ babel-preset-react \
 babel-plugin-transform-es2015-destructuring \
 babel-plugin-minify-mangle-names \
 babel-plugin-minify-constant-folding \
+babel-plugin-transform-async-generator-functions\
 
 #crete directories and files
 mkdir script
 echo 'console.log("hi");' > script/index.js
 
 #create scripts
-npm run set scripts build-js-browser 'browserify ./script/index.js -d -o ./dist/index.js -t [ babelify --presets [ latest react stage-3 babili] --plugins [ transform-es2015-destructuring minify-constant-folding minify-mangle-names ] ] -v'
+npm run set scripts build-js-browser 'browserify ./script/index.js -d -o ./dist/index.js -t [ babelify --presets [ latest react stage-3 babili] --plugins [ transform-es2015-destructuring transform-async-generator-functions minify-constant-folding minify-mangle-names ] ] -v'
