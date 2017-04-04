@@ -1,36 +1,4 @@
-#install npm modules
-npm install --save-dev \
-babel-cli \
-babel-polyfill \
-babel-plugin-transform-es2015-destructuring \
-babel-preset-stage-3 \
-babel-preset-latest \
-babel-preset-react \
-
-npm install --save-dev \
-react \
-react-dom \
-pretty \
-html-minifier \
-es6-promisify \
-deepmerge \
-markdown \
-yaml-front-matter \
-yargs \
-
-# crete directories and files
-mkdir html
-echo 'import React from "react";
-export default ()=>(<html>
-  <head>
-    <script src="./index.js"></script>
-  </head>
-  <body>
-  </body>
-</html>);' > html/index.jsx
-mkdir html/.script/
-#create script
-echo 'import yargs from "yargs";
+import yargs from "yargs";
 import fs from "fs";
 import path from "path";
 import React from "react";
@@ -54,7 +22,6 @@ const listToMatrix = (size) => (list) =>{
     }
     return matrix;
 };
-
 const mdToJSX = array => {
   let key = 0;
   return array.map((element) => {
@@ -84,12 +51,10 @@ const readMD =
   Object.assign(content, {$intro: getIntro(content)});//Generate Intro
   return content;
 };
-
 const templates = new Map();
 const app = async ({indir, outdir, prettify=false, minify=false, perpage=1, read=readMD}) => {
   let inpath = path.join(process.cwd(), indir);
   let outpath = path.join(process.cwd(), outdir);
-
   if(typeof read !== "function"){
     read = require(read);
   }
@@ -127,7 +92,6 @@ const app = async ({indir, outdir, prettify=false, minify=false, perpage=1, read
   let post;
   let index;
   for(let file of files){
-
     const target = path.join(inpath, file);
     if(fs.statSync(target).isDirectory()){
       // const basename = path.basename(file);
@@ -169,7 +133,6 @@ const app = async ({indir, outdir, prettify=false, minify=false, perpage=1, read
         continue;
     }
   };
-
   //write posts
   for(let [key, datum] of data.posts){
     const merged = merge(data.root, datum);
@@ -201,7 +164,3 @@ const app = async ({indir, outdir, prettify=false, minify=false, perpage=1, read
   return {written};
 }
 app(yargs.argv).then(console.log.bind(console)).catch(console.error.bind(console));
-' > html/.script/md-jsx-html.js
-
-#create scripts
-npm run set scripts build-html 'babel-node --debug --presets latest,react,stage-3 --plugins transform-es2015-destructuring html/.script/md-jsx-html --indir ./html/ --outdir ./dist'

@@ -1,0 +1,1 @@
+./node_modules/postcss-cli/bin/postcss $1 --local-plugins --use postcss-extend --use postcss-import --use postcss-cssnext --use postcss-nested --use colorguard --use postcss-autoreset  --use postcss-initial
